@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/songbookAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/searchTb"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+
+            <EditText
+                android:id="@+id/citySearchEt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:lines="1">
+
+                <requestFocus />
+            </EditText>
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <FrameLayout
+        android:id="@+id/citiesLayoutSwitcher"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/citiesListTutorial"
+            layout="@layout/layout_tutorial"/>
+
+        <include
+            android:id="@+id/citiesListLoading"
+            layout="@layout/layout_loading"/>
+
+        <include android:id="@+id/citiesListError"
+            layout="@layout/layout_list_error"/>
+
+        <include
+            android:id="@+id/citiesListEmpty"
+            layout="@layout/layout_list_empty"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/citiesListRv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+    </FrameLayout>
+
+
+</LinearLayout>
