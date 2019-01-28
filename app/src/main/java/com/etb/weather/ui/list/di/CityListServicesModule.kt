@@ -1,7 +1,6 @@
 package com.etb.weather.ui.list.di
 
 import com.etb.weather.BuildConfig
-import com.etb.weather.common.UseCase
 import com.etb.weather.di.scopes.FragmentScope
 import com.etb.weather.services.providers.cities.CitiesApi
 import com.etb.weather.services.providers.cities.CitiesNetwork
@@ -56,7 +55,7 @@ class CityListServicesModule {
     @Provides
     @FragmentScope
     @Named(CITIES_USE_CASE)
-    fun provideCitiesUseCase(provider: CitiesProvider): UseCase<@JvmWildcard String, @JvmWildcard Observable<@JvmWildcard ListState>> {
+    fun provideCitiesUseCase(provider: CitiesProvider): Function1<@JvmWildcard String, @JvmWildcard Observable<@JvmWildcard ListState>> {
         return GetCitiesUseCase(provider)
     }
 

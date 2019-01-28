@@ -13,7 +13,6 @@ import dagger.android.AndroidInjector
 interface CityListComponent : AndroidInjector<CityListFragment> {
     @Subcomponent.Builder
     abstract class Builder : AndroidInjector.Builder<CityListFragment>() {
-
     }
 
 }

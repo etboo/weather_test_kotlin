@@ -1,7 +1,6 @@
 package com.etb.weather.ui.forecast.di
 
 import com.etb.weather.BuildConfig
-import com.etb.weather.common.UseCase
 import com.etb.weather.di.scopes.FragmentScope
 import com.etb.weather.services.providers.forecast.ForecastNetwork
 import com.etb.weather.services.providers.forecast.ForecastProvider
@@ -49,7 +48,7 @@ class ForecastServicesModule {
     @Provides
     @FragmentScope
     @Named(FORECAST_USE_CASE)
-    fun provideForecastUseCase(provider: ForecastProvider): UseCase<@JvmWildcard String, @JvmWildcard Observable<@JvmWildcard ForecastState>> {
+    fun provideForecastUseCase(provider: ForecastProvider): Function1<@JvmWildcard String, @JvmWildcard Observable<@JvmWildcard ForecastState>> {
         return GetForecastUseCase(provider)
     }
 

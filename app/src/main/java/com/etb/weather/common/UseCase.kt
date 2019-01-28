@@ -1,4 +1,6 @@
 package com.etb.weather.common
 
-typealias UseCase<I, O> = (I) -> O
+import io.reactivex.Observable
+
+typealias UseCase<I, O> = (I) -> Observable<O>
 

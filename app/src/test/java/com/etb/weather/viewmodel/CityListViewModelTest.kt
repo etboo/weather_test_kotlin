@@ -17,7 +17,7 @@ import org.mockito.ArgumentMatchers.anyString
 class CityListViewModelTest {
 
     abstract class TestUseCase
-        : UseCase<String, Observable<ListState>>
+        : UseCase<String, ListState>
 
 
     @Rule

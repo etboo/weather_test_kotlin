@@ -12,7 +12,7 @@ import io.reactivex.Observable
 class GetForecastUseCase(
         private val network: ForecastProvider
 
-): UseCase<String, Observable<ForecastState>> {
+): UseCase<String, ForecastState> {
 
     override fun invoke(city: String): Observable<ForecastState> {
         return network.getForecastFor(city)

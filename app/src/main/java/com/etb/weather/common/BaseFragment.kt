@@ -6,12 +6,15 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.etb.weather.ui.MainActivity
+import com.jakewharton.rxrelay2.PublishRelay
 import dagger.android.support.AndroidSupportInjection
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
 abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
 
+    val backPress = PublishRelay.create<Unit>()
 
     private var disposable: Disposable? = null
 
@@ -24,6 +27,9 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
             initUI(it)
 
             disposable = CompositeDisposable().also { disposable ->
+                (activity as MainActivity).backPressed
+                        .subscribe(backPress)
+                        .disposeWith(disposable)
                 bind(it, viewModel!!).forEach { disposable.add(it) }
             }
 

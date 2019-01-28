@@ -9,7 +9,7 @@ fun Disposable.disposeWith(compositeDisposable: CompositeDisposable): Disposable
     return this
 }
 
-inline fun <I, reified O> Observable<I>.flap(clazz: Class<O>): Observable<O> {
+inline fun <I, reified O> Observable<I>.whenIs(clazz: Class<O>): Observable<O> {
     return this.switchMap {
         when(it) {
             is O -> Observable.just<O>(it)

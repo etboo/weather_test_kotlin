@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit
 
 class GetCitiesUseCase(
         private val network: CitiesProvider
-): UseCase<String, Observable<ListState>> {
+): UseCase<String, ListState> {
 
     override fun invoke(query: String): Observable<ListState> {
         return network.getCities(query)

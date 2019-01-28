@@ -8,11 +8,16 @@ import dagger.android.AndroidInjector
 @FragmentScope
 @Subcomponent(modules = [
     ForecastContractResolver::class,
-    ForecastServicesModule::class
+    ForecastServicesModule::class,
+    ForecastArgumentProvider::class
 ])
 interface ForecastComponent : AndroidInjector<ForecastFragment> {
     @Subcomponent.Builder
     abstract class Builder : AndroidInjector.Builder<ForecastFragment>() {
+        abstract fun argument(argumentProvider: ForecastArgumentProvider): Builder
 
+        override fun seedInstance(instance: ForecastFragment) {
+            argument(ForecastArgumentProvider(instance.city))
+        }
     }
 }

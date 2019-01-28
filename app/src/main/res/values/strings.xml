@@ -1,3 +1,15 @@
 <resources>
+    <string name="weather_sunny">&#xf00d;</string>
+    <string name="weather_clear_night">&#xf02e;</string>
+
+    <string name="weather_foggy">&#xf014;</string>
+    <string name="weather_cloudy">&#xf013;</string>
+    <string name="weather_rainy">&#xf019;</string>
+    <string name="weather_snowy">&#xf01b;</string>
+    <string name="weather_thunder">&#xf01e;</string>
+    <string name="weather_drizzle">&#xf01c;</string>
+    <string name="undefined_weather">Undefined</string>
+
+    <string name="exit_toast">Click back again to exit</string>
     <string name="app_name">TestWeatherProj</string>
 </resources>

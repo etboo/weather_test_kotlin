@@ -6,9 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.etb.weather.R
+import com.jakewharton.rxrelay2.PublishRelay
 import kotlinx.android.synthetic.main.item_city.view.*
 
-class CitiesAdapter : RecyclerView.Adapter<CityViewHolder>() {
+class CitiesAdapter : RecyclerView.Adapter<CitiesAdapter.CityViewHolder>() {
+
+    val itemClicks = PublishRelay.create<Int>()
 
     var cities: List<String> = listOf()
         set(value) {
@@ -40,16 +43,17 @@ class CitiesAdapter : RecyclerView.Adapter<CityViewHolder>() {
     override fun getItemCount() = cities.size
 
     override fun onBindViewHolder(holder: CityViewHolder?, position: Int) {
-        holder?.bind(cities[position])
+        holder?.bind(cities[position], position)
     }
-}
 
-class CityViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class CityViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    fun bind(item: String) {
-        itemView.apply {
-            itemCityName.text = item
+        fun bind(item: String, position: Int) {
+            itemView.apply {
+                setOnClickListener { itemClicks.accept(position) }
+                itemCityName.text = item
+            }
         }
     }
-
 }
+
