@@ -11,6 +11,7 @@ import com.jakewharton.rxrelay2.PublishRelay
 import dagger.android.support.AndroidSupportInjection
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Consumer
 
 abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
 
@@ -60,5 +61,13 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
     open fun bind(view: View, vm: VM) = emptyList<Disposable>()
 
     open fun initUI(view: View) {}
+
+    protected fun ViewGroup.switchViews() = Consumer<Int> { visibleRes ->
+        (0 until this.childCount)
+                .map { this.getChildAt(it) }
+                .forEach { it.visibility = View.GONE }
+
+        findViewById<View>(visibleRes).visibility = View.VISIBLE
+    }
 
 }

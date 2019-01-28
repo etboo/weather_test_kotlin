@@ -34,15 +34,15 @@ class ForecastViewModel
     //forecast
     val state: Observable<ForecastState> = presentationRelay.hide()
 
-    val id = forecastFlap.map { it.id }
+    val id = forecastFlap.map { it.weather.first().id }
 
-    val cityName = forecastFlap.map { it.city.name }
+    val cityName = forecastFlap.map { it.name }
 
-    val tempMin = forecastFlap.map { it.temp_min }
+    val tempMin = forecastFlap.map { it.main.temp_min }
 
-    val temp = forecastFlap.map { it.temp }
+    val temp = forecastFlap.map { it.main.temp }
 
-    val tempMax = forecastFlap.map { it.temp_max }
+    val tempMax = forecastFlap.map { it.main.temp_max }
 
     //error
     val errorDetails = presentationRelay

@@ -44,7 +44,7 @@
             layout="@layout/layout_loading"/>
 
         <include android:id="@+id/citiesListError"
-            layout="@layout/layout_list_error"/>
+            layout="@layout/layout_error"/>
 
         <include
             android:id="@+id/citiesListEmpty"

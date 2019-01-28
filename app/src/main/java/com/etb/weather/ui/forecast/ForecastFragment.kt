@@ -6,13 +6,16 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.View
+import android.view.ViewGroup
 import com.etb.weather.R
 import com.etb.weather.common.BaseFragment
 import com.etb.weather.ui.BackFromForecast
 import com.etb.weather.ui.MainActivity
+import com.etb.weather.ui.forecast.presentation.ForecastStatesPresenter
 import com.etb.weather.ui.forecast.presentation.IconPresenter
 import com.jakewharton.rxbinding2.widget.text
-import kotlinx.android.synthetic.main.fragment_forecast.view.*
+import kotlinx.android.synthetic.main.layout_error.view.*
+import kotlinx.android.synthetic.main.layout_forecast_result.view.*
 import javax.inject.Inject
 
 private const val CITY_KEY = "Forecast.City_Key"
@@ -28,6 +31,9 @@ class ForecastFragment : BaseFragment<ForecastViewModel>() {
 
     @Inject
     lateinit var iconPresenter: IconPresenter
+
+    @Inject
+    lateinit var statePresenter: ForecastStatesPresenter
 
     override val layoutId = R.layout.fragment_forecast
 
@@ -46,6 +52,10 @@ class ForecastFragment : BaseFragment<ForecastViewModel>() {
 
     override fun bind(view: View, vm: ForecastViewModel) = listOf(
             //vm -> view
+            vm.errorDetails.subscribe {
+                view.errorDescTv.text = it.desc
+                view.errorTitleTv.text = it.name
+            },
             vm.cityName.subscribe(view.forecastCityTv.text()),
             vm.temp.map { it.toString() }
                     .subscribe(view.forecastCurrentTempTv.text()),
@@ -56,6 +66,7 @@ class ForecastFragment : BaseFragment<ForecastViewModel>() {
             vm.id.map(iconPresenter)
                     .subscribe(view.forecastIconTv.text()),
             vm.backToList.subscribe(router.act(BackFromForecast)),
+            vm.state.map(statePresenter).subscribe((view as ViewGroup).switchViews()),
             //view -> vm
             backPress.subscribe(vm.backPress)
     )

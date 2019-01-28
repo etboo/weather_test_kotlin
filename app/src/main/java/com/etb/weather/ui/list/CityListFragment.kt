@@ -3,7 +3,6 @@ package com.etb.weather.ui.list
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.view.View
-import android.view.ViewGroup
 import com.etb.weather.R
 import com.etb.weather.common.BaseFragment
 import com.etb.weather.ui.BackFromExitDialog
@@ -11,12 +10,11 @@ import com.etb.weather.ui.BackFromList
 import com.etb.weather.ui.ForecastSelected
 import com.etb.weather.ui.MainActivity
 import com.etb.weather.ui.list.presentation.CitiesAdapter
-import com.etb.weather.ui.list.presentation.StatePresenter
+import com.etb.weather.ui.list.presentation.ListStatePresenter
 import com.jakewharton.rxbinding2.widget.textChanges
 import io.reactivex.disposables.Disposable
-import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_list.view.*
-import kotlinx.android.synthetic.main.layout_list_error.view.*
+import kotlinx.android.synthetic.main.layout_error.view.*
 import javax.inject.Inject
 
 class CityListFragment : BaseFragment<CityListViewModel>() {
@@ -27,7 +25,7 @@ class CityListFragment : BaseFragment<CityListViewModel>() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     @Inject
-    lateinit var statePresenter: StatePresenter
+    lateinit var statePresenter: ListStatePresenter
 
     override val layoutId = R.layout.fragment_list
 
@@ -72,12 +70,4 @@ class CityListFragment : BaseFragment<CityListViewModel>() {
         }
     }
 
-}
-
-private fun ViewGroup.switchViews() = Consumer<Int> { visibleRes ->
-    (0 until this.childCount)
-            .map { this.getChildAt(it) }
-            .forEach { it.visibility = View.GONE }
-
-    findViewById<View>(visibleRes).visibility = View.VISIBLE
 }

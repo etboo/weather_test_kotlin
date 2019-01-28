@@ -1,6 +1,7 @@
 package com.etb.weather.ui
 
 import android.support.v4.app.Fragment
+import android.util.Log
 import com.etb.weather.R
 import com.etb.weather.common.Route
 import com.etb.weather.common.Router
@@ -35,10 +36,11 @@ class WeatherRouterFactory(
         override fun <M> act(action: Action<CityListFragment, M>): Route<M> {
             return when (action as ListAction) {
                 is ForecastSelected  -> Route {
+                    Log.d("TAG", "transaction")
                     activity.supportFragmentManager.beginTransaction()
                             .replace(R.id.container, ForecastFragment.newInstance(it as String))
-                            .addToBackStack(FORECAST_FRAGMENT)
-                            .commitNow()
+                            .addToBackStack(null)
+                            .commit()
 
                 }
                 is BackFromList -> Route {
@@ -57,7 +59,7 @@ class WeatherRouterFactory(
         override fun <M> act(action: Action<ForecastFragment, M>): Route<M> {
             return when (action as ForecastAction) {
                 is BackFromForecast -> Route {
-                    activity.supportFragmentManager.popBackStack()
+                    activity.supportFragmentManager.popBackStackImmediate()
                 }
             }
         }

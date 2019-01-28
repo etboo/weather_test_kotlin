@@ -11,6 +11,7 @@ import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Observable
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -25,13 +26,33 @@ class ForecastServicesModule {
     @FragmentScope
     @Provides
     fun provideRetrofit(gson: Gson, client: OkHttpClient): Retrofit {
+        val newClient = client.newBuilder()
+                .addInterceptor(createKeyInterceptor())
+                .build()
+
+
         return Retrofit.Builder()
                 .baseUrl(BuildConfig.WEATHER_URL)
-                .client(client)
+                .client(newClient)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
     }
+
+    private fun createKeyInterceptor() = Interceptor { chain ->
+        val request = chain.request()
+        val url = request.url().newBuilder()
+                .addQueryParameter("APPID", BuildConfig.WEATHER_API_KEY)
+                .build()
+
+        val newRequest = request.newBuilder()
+                .url(url)
+                .build()
+
+        chain.proceed(newRequest)
+
+    }
+
 
     @Provides
     @FragmentScope
@@ -41,7 +62,7 @@ class ForecastServicesModule {
 
     @Provides
     @FragmentScope
-    fun provideCitiesProvider(api: WeatherApi): ForecastProvider {
+    fun provideForecastProvider(api: WeatherApi): ForecastProvider {
         return ForecastNetwork( api)
     }
 

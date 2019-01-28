@@ -5,7 +5,7 @@ import com.etb.weather.common.Presenter
 import javax.inject.Inject
 
 
-class StatePresenter @Inject constructor()
+class ListStatePresenter @Inject constructor()
     : Presenter<ListState, Int> {
     override fun invoke(state: ListState) = when (state) {
         is Tutorial -> R.id.citiesListTutorial

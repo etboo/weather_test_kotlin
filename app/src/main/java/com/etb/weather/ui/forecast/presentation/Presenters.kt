@@ -28,3 +28,15 @@ class IconPresenter @Inject constructor(private val context: Context)
     }
 
 }
+
+class ForecastStatesPresenter @Inject constructor()
+    : Presenter<ForecastState, Int> {
+    override fun invoke(state: ForecastState): Int {
+        return when(state) {
+            is ForecastError -> R.id.forecastError
+            is ForecastLoaded -> R.id.forecastLoaded
+            is ForecastLoading -> R.id.forecastLoading
+        }
+    }
+
+}
